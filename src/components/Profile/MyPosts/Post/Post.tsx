@@ -1,7 +1,12 @@
 import React from 'react';
 import c from './Post.module.css';
 
-function Post(props:any) {
+type PostPropsType = {
+    message: string
+    likesCount:number
+}
+
+function Post(props:PostPropsType) {
     return (
 
             <div className={c.item}>
