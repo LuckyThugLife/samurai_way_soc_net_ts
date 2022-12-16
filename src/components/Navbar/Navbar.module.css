@@ -2,11 +2,13 @@
 .nav {
     grid-area: n;
     background-color: yellowgreen;
+    padding: 30px;
 }
 
-.item {
+.item a {
     color: white;
+    text-decoration: none;
 }
-.active {
+.active a.activeLink {
     color: gold;
 }
