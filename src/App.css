@@ -2,27 +2,17 @@
     margin: 0 auto;
     display: grid;
     width: 1200px;
+    grid-template-areas:"h h" "n c";
 
-    grid-template-areas:
-"h h"
-"n c";
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
     /*grid-gap: 10px;*/
 }
-.header{
-grid-area: h;
-    background-color: forestgreen;
-}
 
-.header img{
-    width: 40px;
-}
-.nav{
-grid-area: n;
-    background-color: yellowgreen;
-}
-.content{
-grid-area: c;
-    background-color:olivedrab ;
-}
+
+
+.app-wrapper-content{
+     grid-area: c;
+     background-color:olivedrab ;
+ }
+
