@@ -1,28 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import c from './Dialogs.module.css';
-
-export type PropsDialogItemType = {
-    name: string
-    id: string
-}
-
-export type PropsMessageType = {
-    message: string
-}
-
-const DialogItem = (props:PropsDialogItemType) => {
-
-    return <div className={c.dialog + ' ' + c.active}>
-        <NavLink to={"/dialogs/" + props.id}>{props.name}</NavLink>
-    </div>
-}
-
-const Message = (props:PropsMessageType) => {
-
-    return <div className={c.message}>{props.message}</div>
-}
-
+import Message from "./Message/Message";
+import DialogItem from "./DialogItems/DialogItems";
 
 function Dialogs() {
     let dialogs = [
