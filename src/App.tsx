@@ -5,29 +5,31 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {addPost, StateType, updateNewPostText} from "./Redux/State";
+import store, { StateType, StoreType,} from "./Redux/State";
 
 
 export type AppPropsType = {
-    state: StateType;
-    addPost: (postMessage: string) => void
-    updateNewPostText:(newText:string) => void
+    store:StoreType
+    // state: StateType;
+    // addPost: (postMessage: string) => void
+    // updateNewPostText:(newText:string) => void
 }
 
 
-function App(props: AppPropsType) {
+const App: React.FC<AppPropsType> = (props) => {
+    const state = props.store.getState()
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
                     <Route path='/profile' render={() => <Profile
-                        profilePage={props.state.profilePage}
-                        newPostText={props.state.profilePage.newPostText}
-                        addPost={addPost}
-                        updateNewPostText={updateNewPostText}
+                        profilePage={state.profilePage}
+                        newPostText={state.profilePage.newPostText}
+                        addPost={props.store.addPost.bind(props.store)}
+                        updateNewPostText={props.store.updateNewPostText.bind(props.store)}
 
 
                     />}/>
