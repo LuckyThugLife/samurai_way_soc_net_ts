@@ -44,16 +44,38 @@ export type StoreType = {
     dispatch:(action:ActionsType)=>void
 }
 
-type AddPostActionType = {
+/*type AddPostActionType = {
     type: "ADD-POST"
     postText:string
-}
-type ChangeNewTextActionType = {
+}*/
+
+// type AddPostActionType = ReturnType<typeof addPostAC>
+
+/*type ChangeNewTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
     newText:string
-}
+}*/
 
-export type ActionsType = AddPostActionType | ChangeNewTextActionType
+// type ChangeNewTextActionType = ReturnType<typeof updateNewPostTextAC>
+
+// export type ActionsType = AddPostActionType | ChangeNewTextActionType
+export type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>
+
+export const addPostAC = (postText:string)/*:AddPostActionType*/ => {
+    return {
+        type:"ADD-POST",
+        postText:postText
+
+    } as const
+    // return{type:"ADD-POST",postText:props.newPostText}
+}
+export const updateNewPostTextAC = (newText:string)/*:ChangeNewTextActionType*/ => {
+    // return{type:"UPDATE-NEW-POST-TEXT", newText:e.currentTarget.value}
+    return {
+        type:"UPDATE-NEW-POST-TEXT",
+        newText:newText
+    } as const
+}
 
 export const store: StoreType = {
     _state: {
@@ -126,9 +148,6 @@ export const store: StoreType = {
         }
 
     }
-
-
-
 }
 
 export default store
