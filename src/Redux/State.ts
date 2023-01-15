@@ -1,3 +1,6 @@
+// const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY"
+// const SEND_MESSAGE = "SEND_MESSAGE"
+
 export type DialogsType = {
     id: number
     name: string
@@ -23,15 +26,19 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
+    newMessageBody: string
 
 }
 
 export type SidebarType = {}
 
+
+
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar?: SidebarType
+
 }
 
 export type StoreType = {
@@ -39,9 +46,9 @@ export type StoreType = {
     //updateNewPostText: (newText: string) => void
     //addPost: (postText: string) => void
     _onChange: () => void
-    subscribe:(observer: () => void) => void
-    getState:()=>StateType
-    dispatch:(action:ActionsType)=>void
+    subscribe: (observer: () => void) => void
+    getState: () => StateType
+    dispatch: (action: ActionsType) => void
 }
 
 /*type AddPostActionType = {
@@ -59,21 +66,37 @@ export type StoreType = {
 // type ChangeNewTextActionType = ReturnType<typeof updateNewPostTextAC>
 
 // export type ActionsType = AddPostActionType | ChangeNewTextActionType
-export type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>
+export type ActionsType =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
 
-export const addPostAC = (postText:string)/*:AddPostActionType*/ => {
+export const addPostAC = (postText: string)/*:AddPostActionType*/ => {
     return {
-        type:"ADD-POST",
-        postText:postText
+        type: "ADD-POST",
+        postText: postText
 
     } as const
     // return{type:"ADD-POST",postText:props.newPostText}
 }
-export const updateNewPostTextAC = (newText:string)/*:ChangeNewTextActionType*/ => {
+export const updateNewPostTextAC = (newText: string)/*:ChangeNewTextActionType*/ => {
     // return{type:"UPDATE-NEW-POST-TEXT", newText:e.currentTarget.value}
     return {
-        type:"UPDATE-NEW-POST-TEXT",
-        newText:newText
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: newText
+    } as const
+}
+export const sendMessageAC = (newText: string)/*:ChangeNewTextActionType*/ => {
+    return {
+        type: "SEND_MESSAGE",
+        newText: newText
+    } as const
+}
+export const updateNewMessageBodyAC = (body: string)/*:ChangeNewTextActionType*/ => {
+    return {
+        type: "UPDATE_NEW_MESSAGE_BODY",
+        body: body
     } as const
 }
 
@@ -100,7 +123,8 @@ export const store: StoreType = {
                 {id: 1, message: "Hi"},
                 {id: 2, message: "What's up man"},
                 {id: 3, message: "Tnx I'm fine"},
-            ]
+            ],
+            newMessageBody: ""
         },
         sidebar: {}
 
@@ -109,7 +133,7 @@ export const store: StoreType = {
         console.log("State changed")
     },
 
-    getState(){
+    getState() {
         return this._state
     },
     subscribe(observer) {
@@ -131,11 +155,10 @@ export const store: StoreType = {
         this._state.profilePage.newPostText = newText
         this._onChange()
     },*/
-    dispatch(action){
+    dispatch(action) {
         if (action.type === "ADD-POST") {
             const newPost: PostsType = {
                 id: new Date().getTime(),
-                //message:state.profilePage.newPostText,
                 message: action.postText,
                 likesCount: 0
             }
@@ -145,8 +168,15 @@ export const store: StoreType = {
         } else if (action.type === "UPDATE-NEW-POST-TEXT") {
             this._state.profilePage.newPostText = action.newText
             this._onChange()
+        } else if (action.type === "UPDATE_NEW_MESSAGE_BODY") {
+            this._state.dialogsPage.newMessageBody = action.body
+            this._onChange()
+        } else if (action.type === "SEND_MESSAGE") {
+            let body = this._state.dialogsPage.newMessageBody
+            this._state.dialogsPage.newMessageBody = ""
+            this._state.dialogsPage.messages.push({id: 6, message: body})
+            this._onChange()
         }
-
     }
 }
 
