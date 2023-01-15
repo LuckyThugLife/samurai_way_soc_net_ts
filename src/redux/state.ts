@@ -1,5 +1,9 @@
-// const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY"
-// const SEND_MESSAGE = "SEND_MESSAGE"
+
+
+import profileReducer, {addPostAC, ProfileActionsType, updateNewPostTextAC} from "./profile_reducer";
+
+import dialogsReducer, {DialogsActionsType, sendMessageAC, updateNewMessageBodyAC} from "./dialogs_reducer";
+import sidebarReducer from "./sidebar_reducer";
 
 export type DialogsType = {
     id: number
@@ -37,7 +41,7 @@ export type SidebarType = {}
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar?: SidebarType
+    sidebar: SidebarType
 
 }
 
@@ -45,7 +49,7 @@ export type StoreType = {
     _state: StateType
     //updateNewPostText: (newText: string) => void
     //addPost: (postText: string) => void
-    _onChange: () => void
+    _onChange: (state:StateType) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsType) => void
@@ -66,13 +70,10 @@ export type StoreType = {
 // type ChangeNewTextActionType = ReturnType<typeof updateNewPostTextAC>
 
 // export type ActionsType = AddPostActionType | ChangeNewTextActionType
-export type ActionsType =
-    ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof sendMessageAC>
-    | ReturnType<typeof updateNewMessageBodyAC>
+export type ActionsType =ProfileActionsType | DialogsActionsType
 
-export const addPostAC = (postText: string)/*:AddPostActionType*/ => {
+
+/*export const addPostAC = (postText: string)/!*:AddPostActionType*!/ => {
     return {
         type: "ADD-POST",
         postText: postText
@@ -80,25 +81,25 @@ export const addPostAC = (postText: string)/*:AddPostActionType*/ => {
     } as const
     // return{type:"ADD-POST",postText:props.newPostText}
 }
-export const updateNewPostTextAC = (newText: string)/*:ChangeNewTextActionType*/ => {
+export const updateNewPostTextAC = (newText: string)/!*:ChangeNewTextActionType*!/ => {
     // return{type:"UPDATE-NEW-POST-TEXT", newText:e.currentTarget.value}
     return {
         type: "UPDATE-NEW-POST-TEXT",
         newText: newText
     } as const
-}
-export const sendMessageAC = (newText: string)/*:ChangeNewTextActionType*/ => {
+}*/
+/*export const sendMessageAC = (newText: string)/!*:ChangeNewTextActionType*!/ => {
     return {
         type: "SEND_MESSAGE",
         newText: newText
     } as const
 }
-export const updateNewMessageBodyAC = (body: string)/*:ChangeNewTextActionType*/ => {
+export const updateNewMessageBodyAC = (body: string)/!*:ChangeNewTextActionType*!/ => {
     return {
         type: "UPDATE_NEW_MESSAGE_BODY",
         body: body
     } as const
-}
+}*/
 
 export const store: StoreType = {
     _state: {
@@ -156,7 +157,12 @@ export const store: StoreType = {
         this._onChange()
     },*/
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._onChange(this._state)
+
+       /* if (action.type === "ADD-POST") {
             const newPost: PostsType = {
                 id: new Date().getTime(),
                 message: action.postText,
@@ -176,7 +182,7 @@ export const store: StoreType = {
             this._state.dialogsPage.newMessageBody = ""
             this._state.dialogsPage.messages.push({id: 6, message: body})
             this._onChange()
-        }
+        }*/
     }
 }
 
