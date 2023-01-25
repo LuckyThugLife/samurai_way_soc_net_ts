@@ -2,12 +2,15 @@ import React from 'react';
 import c from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsType, ProfilePageType} from "../../redux/state";
+import {DispatchType} from "../../redux/redux-store";
+import {InitialStateProfilePageType} from "../../redux/profile_reducer";
 type PropsType = {
-    profilePage:ProfilePageType
+   // profilePage:ProfilePageType
+   profilePage:InitialStateProfilePageType
     newPostText:string
     //addPost:(postMessage: string)=>void
-    dispatch:(action:ActionsType)=>void
+   // dispatch:(action:ActionsType)=>void
+    dispatch:DispatchType
     // updateNewPostText:(newText:string) => void
 }
 
