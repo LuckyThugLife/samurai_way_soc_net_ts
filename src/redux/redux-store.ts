@@ -16,3 +16,4 @@ export type DispatchType = typeof store.dispatch
 export let store = createStore(rootReducer)
 
 export default store
+
