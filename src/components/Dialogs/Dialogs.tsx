@@ -4,15 +4,12 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItems/DialogItems";
 import {InitialStateDialogsPageType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs_reducer';
 import {DispatchType, StoreTypes} from "../../redux/redux-store";
+import {DialogsPropsType} from "./DialogsContainer";
 
 
 
-type PropsType = {
-    dialogsPage: InitialStateDialogsPageType
-    dispatch:  DispatchType
-}
 
-function Dialogs(props:PropsType) {
+function Dialogs(props:DialogsPropsType) {
 
     let state = props.dialogsPage
 
@@ -20,12 +17,13 @@ function Dialogs(props:PropsType) {
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
     let messagesElements = state.messages.map(m => <Message message={m.message}/>)
 let newMessageBody = state.newMessageBody
+
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageAC(newMessageBody))
+        props.sendMessage(newMessageBody)
     }
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
  let body = e.currentTarget.value
-        props.dispatch(updateNewMessageBodyAC(body))
+        props.updateNewMessageBody(body)
     }
     return (
 

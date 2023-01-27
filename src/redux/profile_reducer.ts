@@ -1,5 +1,3 @@
-import {sendMessageAC} from "./dialogs_reducer";
-
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 
@@ -30,7 +28,7 @@ const profileReducer = (state = InitialStateProfilePage, action: ProfileActionsT
         case ADD_POST:
             const newPost: PostsType = {
                 id: new Date().getTime(),
-                message: action.postText,
+                message: state.newPostText,
                 likesCount: 0
             }
             state.posts.push(newPost)
@@ -47,11 +45,9 @@ const profileReducer = (state = InitialStateProfilePage, action: ProfileActionsT
  export type AddPostACType = ReturnType<typeof addPostAC>
  export type UpdateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
 
-export const addPostAC = (postText: string)/*:AddPostActionType*/ => {
+export const addPostAC = ()/*:AddPostActionType*/ => {
     return {
         type: ADD_POST,
-        postText: postText
-
     } as const
     // return{type:"ADD-POST",postText:props.newPostText}
 }
