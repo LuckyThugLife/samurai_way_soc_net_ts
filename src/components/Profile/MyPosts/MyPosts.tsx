@@ -1,18 +1,14 @@
-import React, {ChangeEvent} from 'react';
-import {addPostAC, PostsType, ProfileActionsType, updateNewPostTextAC} from '../../../redux/profile_reducer';
-
+import React from 'react';
+import {PostsType} from '../../../redux/profile_reducer';
 import c from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {DialogsActionsType} from "../../../redux/dialogs_reducer";
 
 
 export type PropsType = {
     posts: Array<PostsType>
     newPostText: string
-    // addPost:(postText:string)=>void
     addPost: () => void
    updateNewPostText:(newText: string)=>void
-
 }
 
 function MyPosts(props: PropsType) {
@@ -26,7 +22,7 @@ function MyPosts(props: PropsType) {
     }
     const onPostChangeHandler = () => {
         if (newPostElement.current) {
-            let text = newPostElement.current?.value
+            let text = newPostElement.current.value
             props.updateNewPostText(text)
         }
     }
@@ -38,6 +34,7 @@ function MyPosts(props: PropsType) {
             <div>
                 <div>
                 <textarea onChange={onPostChangeHandler}
+                          ref={newPostElement}
                           value={props.newPostText}
                 />
                 </div>
@@ -49,8 +46,6 @@ function MyPosts(props: PropsType) {
                 {postsElements}
             </div>
         </div>
-
-
     );
 }
 

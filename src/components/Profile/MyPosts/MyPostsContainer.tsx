@@ -6,28 +6,28 @@ import {connect} from "react-redux";
 
 import {Dispatch} from "redux";
 
-type MapStateToProps = {
+type MapStateToPropsType = {
     posts: Array<PostsType>
     newPostText: string
 }
 
-type MapDispatchToProps = {
-    updateNewPostText: (newText: string) => void
+type MapDispatchToPropsType = {
+    updateNewPostText: (text: string) => void
     addPost: () => void
 }
-export type PropsType = MapStateToProps & MapDispatchToProps
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToProps => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        updateNewPostText: (newText: string) => {
-            let action = updateNewPostTextAC(newText)
+        updateNewPostText: (text: string) => {
+            let action = updateNewPostTextAC(text)
             dispatch(action)
         },
         addPost: () => {

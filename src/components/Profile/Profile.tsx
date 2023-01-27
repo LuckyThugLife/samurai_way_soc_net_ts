@@ -1,9 +1,6 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer, {PropsType} from "./MyPosts/MyPostsContainer";
-import {StoreTypes} from "../../redux/redux-store";
-
-
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 function Profile() {
     return (
@@ -12,7 +9,6 @@ function Profile() {
             <MyPostsContainer
             />
         </div>
-
     );
 }
 
