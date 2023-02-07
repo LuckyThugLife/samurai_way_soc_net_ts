@@ -13,19 +13,23 @@ export type UsersType = {
     id: number
     photoUrl:string
     followed: boolean
-    fullName: string
+    name: string
+    photos: {
+        small : string
+    }
     status: string
     location: LocationType
 }
 
 const InitialStateUsersPage = {
-    users: [] as Array<UsersType>
-
+    users: []
 }
 
-export type InitialStateUsersPageType = typeof InitialStateUsersPage
+export type InitialStateUsersPageType = {
+    users: Array<UsersType>
+}
 
-const usersReducer = (state = InitialStateUsersPage, action: UsersActionsType): InitialStateUsersPageType => {
+const usersReducer = (state: InitialStateUsersPageType = InitialStateUsersPage, action: UsersActionsType): InitialStateUsersPageType => {
 
     switch (action.type) {
         case UNFOLLOW:
